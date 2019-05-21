@@ -12,6 +12,7 @@
 #include <map>
 #include <vector>
 #include <iterator>
+#include <fstream>
 
 using namespace std;
 
@@ -34,6 +35,10 @@ public:
     
     item (string name) {
         item::name = name;
+    }
+    
+    item(){
+        
     }
     
     void set_component (item part, int amount) {
@@ -60,6 +65,10 @@ struct record { //структура, для хранения статистик
         importing = im;
         year = ye;
     }
+    
+    record(){
+        
+    }
 };
 
 struct data { //структура, используемая для страны, хранит указатель на товар и доп. информацию про него
@@ -68,6 +77,10 @@ struct data { //структура, используемая для страны
     
     data (int n){
         element = &items[n];
+    }
+    
+    data(){
+        
     }
 };
 
@@ -78,6 +91,9 @@ public:
     
     country (string name) {
         country::name = name;
+    }
+    country(){
+        
     }
 };
 
@@ -642,9 +658,32 @@ void add_countries() { //добавляет страну
     }
 }
 
+const char* FName = "/Myproject/data.txt";
+
+void writing(){
+    ofstream out(FName);
+    size_t size = countries.size();
+    out.write((char*)&size,sizeof(size_t));
+    out.write((char*)&countries[0],size*sizeof(countries[0]));
+    out.close();
+    cout << "Successfuly written";
+}
+
+void reading(){
+    ifstream in(FName);
+    size_t size;
+    in.read((char*)&size,sizeof(size_t));
+    countries.resize(size);
+    in.read((char*)&countries[0],size*sizeof(countries[0]));
+    in.close();
+}
+
 int main(int argc, const char * argv[]) {
+    reading();
+    atexit(writing);
     home();
-    
     return 0;
+    
+    //  4 Glass 3 4 Iron 3 4 Plastic 3 4 Tea 3 4 Rubber 3 4 Wire 1 1 2 1 1 1 5 3 2 4 Board 1 1 2 2 1 1 3 5 2 4 Controller 1 1 2 2 1 1 3 5 2 4 Fridge 1 1 2 5 1 1 3 10 1 1 5 2 1 1 6 20 2 4 Computer 1 1 2 3 1 1 3 5 1 1 6 2 1 1 7 2 2 4 Oven 1 1 2 10 1 1 1 5 1 1 8 1 1 1 6 5 2 4 Window 1 1 1 10 1 1 2 2 1 1 3 5 2 4 Tyre 1 1 5 15 2 3 Ukraine 1 2 2 3 2 6 2 9 2 12 3 3 Russia 1 1 2 2 2 5 2 6 2 13 3 3 Poland 1 1 2 3 2 8 2 9 2 11 3 3 Bulgaria 1 1 2 2 2 7 2 12 2 13 3 3 Germany 1 2 2 4 2 7 2 8 2 13 3 3 USA 1 1 2 2 2 3 2 7 2 8 2 10 2 13 3 3 England 1 4 2 2 2 5 2 8 2 9 2 12 3 1 1 2 1 2 5 3 2 2016 1 20 4 10 2015 2 1 2 2 2 2 300 10 40 2016 1 30 25 10 2014 2
 }
 
