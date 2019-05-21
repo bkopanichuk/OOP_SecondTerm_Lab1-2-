@@ -46,7 +46,7 @@ public:
     }
 };
 
-vector<item> items; //массив товаров
+vector<item> items; //массив товаров.
 
 struct record { //структура, для хранения статистики по товарам для разных периодов
     int produce;
