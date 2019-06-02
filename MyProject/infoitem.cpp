@@ -1,5 +1,6 @@
 #include "infoitem.h"
 #include "ui_infoitem.h"
+#include <QMessageBox>
 
 InfoItem::InfoItem(QWidget *parent) :
     QDialog(parent),
@@ -62,3 +63,33 @@ void InfoItem::on_pushButton_clicked()
     emit SendItem(bdw4->search_item(item->text()));
     close();
 } */
+
+void InfoItem::on_pushButton_2_clicked()
+{
+    int ex = 0;
+    int im = 0;
+    int l, h;
+    if (ui->lineEdit->text() != nullptr){
+        l = ui->lineEdit->text().toInt();
+    } else {
+        l = 0;
+    }
+    if (ui->lineEdit_2->text() != nullptr){
+        h = ui->lineEdit_2->text().toInt();
+    } else {
+        h = 9999999;
+    }
+    for (auto i = bdw4->countries.begin(); i != bdw4->countries.end(); i++){
+        auto tmp = i->search_ritem(cw4->name);
+        if (tmp != nullptr){
+            for (auto k = tmp->rec.begin(); k != tmp->rec.end(); k++){
+                if (k->year > l && k->year < h){
+                    im = im + k->importing;
+                    ex = ex + k->exporting;
+                }
+            }
+        }
+    }
+    int balance = im - ex;
+    QMessageBox::about(this, "Balance", QString("Balance: %1").arg(balance));
+}

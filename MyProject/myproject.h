@@ -8,6 +8,7 @@ class country;
 class item;
 class record;
 class records;
+class bigdata;
 
 class item { //класс товара, который содержит название товара и массив компонентов (и их количества)
 public:
@@ -78,6 +79,18 @@ class records { //структура, используемая для стран
 public:
     item * element;
     QVector<record> rec;
+
+    void add_record(int pr = 0, int ex = 0, int im = 0, int ye = 0){
+        bool tmp = false;
+        for (auto i = rec.begin(); i != rec.end(); i++){
+            if (i->year == ye){
+                tmp = true;
+            }
+        }
+        if (tmp == false){
+            rec.push_back(record(pr, ex, im, ye));
+        }
+    }
 
     records(item * el){
         element = el;

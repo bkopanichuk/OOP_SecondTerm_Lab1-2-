@@ -25,6 +25,8 @@ private slots:
     void RecieveItem(records * it);
     void RecieveBigData(bigdata * bgd);
     void on_pushButton_clicked();
+    void on_pushButton_2_clicked();
+    void UpdateInfo();
 
 signals:
     void SendBigData(bigdata * bgd);

@@ -31,6 +31,8 @@ private slots:
 
 //    void on_listWidget_itemActivated(QListWidgetItem *item);
 
+    void on_pushButton_2_clicked();
+
 signals:
     void SendBigData(bigdata * bgd);
     void SendItem(item * it);
